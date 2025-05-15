@@ -5,7 +5,7 @@ export class ResponseDeleteProfessionDto {
 
   @IsString()
   @ApiProperty()
-  id_user: string;
+  id_profession: string;
 
   @IsNumber()
   @ApiProperty()

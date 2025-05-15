@@ -55,13 +55,13 @@ export class ProfessionService {
     try{
     const professionRemove = await this.prisma.profession_s.delete({ where: {id_profesion: id }})
     return {
-        id_user: `Id new user ${professionRemove.id_profesion}`,
+        id_profession: `Id new user ${professionRemove.id_profesion}`,
         statusCode: 201,
         message: 'Exit: new user add',
       }
     } catch {
       return {
-        id_user: `Id profession not found `,
+        id_profession: `Id profession not found `,
         statusCode: 500,
         message: 'Exit: new user add',
       }

@@ -11,7 +11,7 @@ export class ResponseCreateUserDto {
   @ApiProperty()
   statusCode: number;
 
-  @IsString()
+  @IsNumber()
   @ApiProperty()
   message: string;
 }

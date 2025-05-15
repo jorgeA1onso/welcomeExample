@@ -18,7 +18,7 @@ export class ResponseGetProfessionDto {
   static fromEntity(profession: ProfessionModel): ResponseGetProfessionDto {
     const dto = new ResponseGetProfessionDto();
     dto.id_profession = profession.id_profesion;
-    dto.message = 'Profession found';
+    dto.message = 'Usuario encontrado';
     dto.statusCode = 200;
     return dto;
   }

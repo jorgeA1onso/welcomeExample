@@ -5,7 +5,7 @@ import { user_s as UserModel } from '@prisma/client';
 export class ResponseGetUserDto {
   @IsNumber()
   @ApiProperty()
-  id_user: number;
+  id: number;
 
   @IsString()
   @ApiProperty()
@@ -17,7 +17,7 @@ export class ResponseGetUserDto {
 
   static fromEntity(user: UserModel): ResponseGetUserDto {
     const dto = new ResponseGetUserDto();
-    dto.id_user = user.id_user;
+    dto.id = user.id_user;
     dto.message = 'Usuario encontrado';
     dto.statusCode = 200;
     return dto;

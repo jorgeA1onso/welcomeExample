@@ -43,8 +43,19 @@ export class UserController {
     description: 'Exit: User found',
   })
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: Number) {
     return this.userService.findOne(+id);
+  }
+
+  @ApiOperation({ summary: 'Get one user by id withe her/him profession' })
+  @ApiParam({ name: 'id', type: Number, description: 'id user' })
+  @ApiResponse({
+    status: 200,
+    description: 'Exit: User found',
+  })
+  @Get('userandprofession/:id')
+  findOneUserWithProfession(@Param('id') id: Number) {
+    return this.userService.findOneUserWithProfession(+id);
   }
 
   @Patch(':id')
@@ -59,7 +70,7 @@ export class UserController {
     description: 'Exit: User remove',
   })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: Number) {
     return this.userService.remove(+id);
   }
 }
