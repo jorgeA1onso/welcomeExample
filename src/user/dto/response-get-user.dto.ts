@@ -17,7 +17,7 @@ export class ResponseGetUserDto {
 
   static fromEntity(user: UserModel): ResponseGetUserDto {
     const dto = new ResponseGetUserDto();
-    dto.id = user.id_user;
+    dto.id = user.id;
     dto.message = 'Usuario encontrado';
     dto.statusCode = 200;
     return dto;

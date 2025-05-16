@@ -2,7 +2,7 @@ import { user_s as ModelUser } from '@prisma/client';
 import { profession_s as ProfessionModel } from "generated/prisma";
 
 export interface UserWithProfession extends ModelUser{
-    profession_s: ProfessionModel[];
+    professions?: ProfessionModel[];
 }
 
 /** 

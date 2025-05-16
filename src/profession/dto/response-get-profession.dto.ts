@@ -5,7 +5,7 @@ import { profession_s as ProfessionModel } from '@prisma/client';
 export class ResponseGetProfessionDto {
   @IsNumber()
   @ApiProperty()
-  id_profession: number;
+  id: number;
 
   @IsString()
   @ApiProperty()
@@ -17,7 +17,7 @@ export class ResponseGetProfessionDto {
 
   static fromEntity(profession: ProfessionModel): ResponseGetProfessionDto {
     const dto = new ResponseGetProfessionDto();
-    dto.id_profession = profession.id_profesion;
+    dto.id = profession.id;
     dto.message = 'Usuario encontrado';
     dto.statusCode = 200;
     return dto;

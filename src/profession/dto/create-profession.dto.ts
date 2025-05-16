@@ -3,10 +3,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProfessionDto {
 
-  @IsNumber()
-  @ApiProperty()
-  id_profesion: number;
-
   @IsString()
   @ApiProperty()
   name_profesion?: string;

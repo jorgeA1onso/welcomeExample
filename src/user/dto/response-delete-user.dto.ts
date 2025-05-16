@@ -5,7 +5,7 @@ export class ResponseDeleteUserDto {
 
   @IsString()
   @ApiProperty()
-  id_user: string;
+  id: string;
 
   @IsNumber()
   @ApiProperty()

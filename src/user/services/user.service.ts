@@ -13,15 +13,15 @@ export class UserService {
   constructor (private prisma: PrismaService) {}
   async create(createUserDto: CreateUserDto): Promise <ResponseCreateUserDto>{
     try {
-    const newUser: ModelUser = await this.prisma.user_s.create( { data: createUserDto} );
+    const newUser = await this.prisma.user_s.create( { data: createUserDto} );
       return {
-        id_user: `Id new user ${newUser.id_user}`,
+        id: `Id new user ${newUser.id}`,
         statusCode: 201,
         message: 'Exit: new user add',
     }
-    } catch {
+    } catch (error){
       return {
-          id_user: '',
+          id: error,
           statusCode: 500,
           message: "Internal server error"
       }
@@ -35,7 +35,7 @@ export class UserService {
       take: pageSize,
       skip,
       orderBy: {
-        id_user: 'asc',
+        id: 'asc',
       },
     });
     return listUserFound.map((user) => ResponseGetUserDto.fromEntity(user));
@@ -46,7 +46,7 @@ export class UserService {
 
   async findOne(id: number): Promise <ModelUser> {
     try {
-      const userFound = await this.prisma.user_s.findUnique( { where: { id_user: id } } )
+      const userFound: ModelUser | null = await this.prisma.user_s.findUnique( { where: { id: id } } )
       if (!userFound){
         throw new NotFoundException(`Id: ${id} does not exist`)
       }
@@ -59,15 +59,15 @@ export class UserService {
 async findOneUserWithProfession(id: number): Promise<UserWithProfession> {
   try {
     const userFoundWithProfessions = await this.prisma.user_s.findUnique({
-      where: { id_user: id },
-        include: {
-          profession_s: true,
-        }
+      where: { id: id },
+      include: {
+        profession_s: true,
+      },
     });
 
-  if (!userFoundWithProfessions) {
-    throw new NotFoundException(`Error: Internal service`);
-  }
+    if (!userFoundWithProfessions) {
+      throw new NotFoundException(`Error: User not found`);
+    }
 
     return userFoundWithProfessions;
   } catch (err) {
@@ -76,21 +76,22 @@ async findOneUserWithProfession(id: number): Promise<UserWithProfession> {
 }
 
 
+
   update(id: number) {
     return `This action updates a #${id} user`;
   }
 
   async remove(id: number): Promise<ResponseDeleteUserDto> {
     try {
-      const userDelete = await this.prisma.user_s.delete( { where: { id_user: id } } )
+      const userDelete = await this.prisma.user_s.delete( { where: { id: id } } )
         return {
-          id_user: `Id user remove ${userDelete.id_user}`,
+          id: `Id user remove ${userDelete.id}`,
           statusCode: 201,
           message: 'Exit: new user add',
         }
     } catch (error) {
       return {
-        id_user: error,
+        id: error,
         statusCode: 500,
         message: `Failure: Can't remove user with id: ${id}`,
       }

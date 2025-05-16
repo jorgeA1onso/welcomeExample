@@ -12,8 +12,8 @@ export class ProfessionService {
   constructor (private prisma: PrismaService){}
   async create(createProfessionDto: CreateProfessionDto): Promise<String> {
     try{ 
-      const newProfession: ModelProfession = await this.prisma.profession_s.create( { data: createProfessionDto } );
-      return `New profession created with id: ${newProfession.id_profesion}`;
+      const newProfession = await this.prisma.profession_s.create( { data: createProfessionDto } );
+      return `New profession created with id: ${newProfession.id}`;
     } catch {
       throw new NotFoundException('Error creating new profession')
     }
@@ -21,11 +21,11 @@ export class ProfessionService {
 
   async findAll(skip: number, pageSize: number, where = {}): Promise<ResponseGetProfessionDto[]> {
     try {
-      const allProfession_s : ModelProfession[] = await this.prisma.profession_s.findMany({
+      const allProfession_s = await this.prisma.profession_s.findMany({
         where,
         take: pageSize, 
         orderBy: {
-          id_profesion: 'asc'
+          id: 'asc'
         }
       });
       return allProfession_s.map((profession) => ResponseGetProfessionDto.fromEntity(profession))
@@ -37,7 +37,7 @@ export class ProfessionService {
 
   async findOne(id: number): Promise<ProfessionsModel> {
     try {
-    const professionFound = await this.prisma.profession_s.findUnique( {where: { id_profesion: id } } );
+    const professionFound = await this.prisma.profession_s.findUnique( {where: { id: id } } );
     if (!professionFound){
       throw new NotFoundException(`Error: User with id: ${id} not found`)
     }
@@ -53,15 +53,15 @@ export class ProfessionService {
 
   async remove(id: number): Promise<ResponseDeleteProfessionDto> {
     try{
-    const professionRemove = await this.prisma.profession_s.delete({ where: {id_profesion: id }})
+    const professionRemove = await this.prisma.profession_s.delete({ where: {id: id }})
     return {
-        id_profession: `Id new user ${professionRemove.id_profesion}`,
+        id: `Id new user ${professionRemove.id}`,
         statusCode: 201,
         message: 'Exit: new user add',
       }
     } catch {
       return {
-        id_profession: `Id profession not found `,
+        id: `Id profession not found `,
         statusCode: 500,
         message: 'Exit: new user add',
       }

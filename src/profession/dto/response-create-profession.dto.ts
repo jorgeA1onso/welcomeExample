@@ -5,7 +5,7 @@ export class ResponseCreateProfessionDto {
 
   @IsString()
   @ApiProperty()
-  id_profession: string;
+  id: string;
 
   @IsNumber()
   @ApiProperty()
