@@ -15,7 +15,7 @@ services:
   app:
     build: .
     ports:
-      - "5000:3000"
+      - "3000:3000"
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/database_one?schema=public
     depends_on:

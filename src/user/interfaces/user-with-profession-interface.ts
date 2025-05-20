@@ -1,8 +1,8 @@
-import { user_s as ModelUser } from '@prisma/client';
-import { profession_s as ProfessionModel } from "generated/prisma";
+import { users as ModelUser } from '@prisma/client';
+import { professions as ProfessionModel } from "@prisma/client";
 
-export interface UserWithProfession extends ModelUser{
-    professions?: ProfessionModel[];
+export interface UserWithProfession extends Omit<ModelUser, 'profession'>{
+    profession: ProfessionModel[];
 }
 
 /** 

@@ -5,9 +5,9 @@ export class CreateProfessionDto {
 
   @IsString()
   @ApiProperty()
-  name_profesion?: string;
+  name?: string;
 
   @IsNumber()
   @ApiProperty()
-  id_user_profession: number;
+  id_user: number;
 }

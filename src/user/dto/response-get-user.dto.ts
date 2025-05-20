@@ -1,6 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { user_s as UserModel } from '@prisma/client';
+import { users as UserModel } from '@prisma/client';
 
 export class ResponseGetUserDto {
   @IsNumber()

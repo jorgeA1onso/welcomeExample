@@ -1,6 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { profession_s as ProfessionModel } from '@prisma/client';
+import { professions as ProfessionModel } from '@prisma/client';
 
 export class ResponseGetProfessionDto {
   @IsNumber()

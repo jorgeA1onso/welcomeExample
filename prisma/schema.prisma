@@ -13,17 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user_s {
+model users {
   id                   Int        @id @default(autoincrement())
-  name_user            String?    @db.VarChar
-  last_name            String?    @db.VarChar
-  age                  Int?
-  profession_s         profession_s[]
+  name                 String?    @default("")
+  last_name            String?    @default("")
+  age                  Int?       @default(0)
+  profession           professions[] @relation("usersprofession")
 }
 
-model profession_s {
+model professions {
   id                   Int        @id @default(autoincrement())
-  name_profesion       String?    @db.VarChar
-  id_user              Int?
-  user_s               user_s? @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  name                 String?    @default("")
+  id_user              Int?       
+  user                 users?     @relation("usersprofession", fields: [id_user], references: [id])
 }

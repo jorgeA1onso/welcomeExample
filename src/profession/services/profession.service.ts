@@ -1,9 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProfessionDto } from '../dto/create-profession.dto';
 import { PrismaService } from 'src/prisma.service';
-import { profession_s as ModelProfession } from 'generated/prisma';
-import { profession_s as ProfessionsModel } from '@prisma/client';
-import { ResponseCreateProfessionDto } from '../dto/response-create-profession.dto';
+import { professions as ProfessionsModel } from '@prisma/client';
 import { ResponseDeleteProfessionDto } from '../dto/response-delete-profession.dto';
 import { ResponseGetProfessionDto } from '../dto/response-get-profession.dto';
 
@@ -12,7 +10,7 @@ export class ProfessionService {
   constructor (private prisma: PrismaService){}
   async create(createProfessionDto: CreateProfessionDto): Promise<String> {
     try{ 
-      const newProfession = await this.prisma.profession_s.create( { data: createProfessionDto } );
+      const newProfession = await this.prisma.professions.create( { data: createProfessionDto } );
       return `New profession created with id: ${newProfession.id}`;
     } catch {
       throw new NotFoundException('Error creating new profession')
@@ -21,7 +19,7 @@ export class ProfessionService {
 
   async findAll(skip: number, pageSize: number, where = {}): Promise<ResponseGetProfessionDto[]> {
     try {
-      const allProfession_s = await this.prisma.profession_s.findMany({
+      const allProfession_s = await this.prisma.professions.findMany({
         where,
         take: pageSize, 
         orderBy: {
@@ -35,12 +33,9 @@ export class ProfessionService {
   }
 
 
-  async findOne(id: number): Promise<ProfessionsModel> {
+  async findOne(id: number): Promise<ProfessionsModel | null> {
     try {
-    const professionFound = await this.prisma.profession_s.findUnique( {where: { id: id } } );
-    if (!professionFound){
-      throw new NotFoundException(`Error: User with id: ${id} not found`)
-    }
+    const professionFound: ProfessionsModel | null = await this.prisma.professions.findUnique( {where: { id: id } } );
     return professionFound;
     } catch (err) {
       throw new NotFoundException(err)
@@ -53,7 +48,7 @@ export class ProfessionService {
 
   async remove(id: number): Promise<ResponseDeleteProfessionDto> {
     try{
-    const professionRemove = await this.prisma.profession_s.delete({ where: {id: id }})
+    const professionRemove = await this.prisma.professions.delete({ where: {id: id }})
     return {
         id: `Id new user ${professionRemove.id}`,
         statusCode: 201,
@@ -69,6 +64,6 @@ export class ProfessionService {
   }
 
   async count( where = {} ): Promise<number>{
-    return this.prisma.profession_s.count({ where });
+    return this.prisma.professions.count({ where });
   } 
 }
