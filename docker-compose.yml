@@ -11,6 +11,14 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+  fluentbit:
+    image: fluent/fluent-bit:latest
+    volumes:
+    - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+    - ./fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf
+    - ./logs:/app/logs
+    command: /fluent-bit/bin/fluent-bit -c /fluent-bit/etc/fluent-bit.conf
+
 
   app:
     build: .
