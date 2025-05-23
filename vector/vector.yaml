@@ -1,0 +1,28 @@
+sources:
+  my_source:
+    type: docker_logs
+    include_containers:
+      - "vector-2"
+
+transforms:
+  parse:
+    type: remap
+    inputs:
+      - my_source
+    source: |
+      . = parse_json!(.message)
+
+sinks:
+  my_sqs:
+    type: aws_sqs
+    inputs:
+      - parse
+    region: us-east-2
+    queue_url: "https://sqs.us-east-2.amazonaws.com/084801557044/quew-one-with-vector"
+    encoding:
+      codec: json
+
+api:
+  enabled: true
+  address: 0.0.0.0:8686
+
