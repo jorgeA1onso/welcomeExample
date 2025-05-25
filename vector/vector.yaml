@@ -1,14 +1,20 @@
 sources:
-  my_source:
+  docker_logs_source:
     type: docker_logs
     include_containers:
+      - "vector-1"
       - "vector-2"
+
+  file_logs_source:
+    type: file
+    include:
+      - /tmp/vector-test/test.log
 
 transforms:
   parse:
     type: remap
     inputs:
-      - my_source
+      - file_logs_source
     source: |
       . = parse_json!(.message)
 
@@ -17,12 +23,11 @@ sinks:
     type: aws_sqs
     inputs:
       - parse
-    region: us-east-2
+      - docker_logs_source
+      - file_logs_source
     queue_url: "https://sqs.us-east-2.amazonaws.com/084801557044/quew-one-with-vector"
+    region: us-east-2
     encoding:
       codec: json
 
-api:
-  enabled: true
-  address: 0.0.0.0:8686
 
